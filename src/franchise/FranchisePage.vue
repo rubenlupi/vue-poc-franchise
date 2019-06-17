@@ -2,6 +2,8 @@
     <div>
         <h1>Franchise name: {{ franchise.name }}</h1>
         <p>Points: {{ franchise.points }}</p>
+        <img :src="loadUrl(franchise.image)"/>
+        <img :src="loadUrl(franchise.map)"/>
     </div>
 </template>
 
@@ -14,8 +16,8 @@ export default {
             franchise: state => state.franchises.item,
         }),
     },
-    created () {
-
-    },
+    methods: {
+        loadUrl: (url) => `src/img/${url}`,
+    }
 };
 </script>

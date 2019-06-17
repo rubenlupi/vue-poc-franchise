@@ -3,7 +3,7 @@ export function getFranchisesMocked() {
         {
             _id: 1,
             name: 'Skess - sports',
-            image: 'image1.jpg',
+            image: 'logo1.jpg',
             map: 'map1.jpg',
             points: [
                 {

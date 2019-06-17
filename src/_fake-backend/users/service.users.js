@@ -38,7 +38,6 @@ export function userService() {
         try {
             const matchedUsers = users.filter(user => { return user.id === id; });
             let user = matchedUsers.length ? matchedUsers[0] : null;
-            console.log('user info', user);
             return { ok: true, text: () => Promise.resolve(JSON.stringify(user))};
         } catch (err) {
             throw err;
