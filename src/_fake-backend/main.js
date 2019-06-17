@@ -1,11 +1,25 @@
 
 
 import  { userRouter } from './users/route.users'
-import  { franchaiseRouter } from './franchaises/route.franchaises'
+import  { franchiseService } from './franchises/service.franchises'
+import { getFranchisesMocked } from './franchises/mock.fanchises'
+import  { franchiseRouter } from './franchises/route.franchises'
+import  { commonService } from './common'
+
+const initDefaultFranchises = () => {
+    let franchises = commonService().getLocalStorage('franchises');
+    if (franchises.length) return;
+    const franchisesMocked = getFranchisesMocked();
+    franchisesMocked.forEach(item => {
+        let franchises = commonService().getLocalStorage('franchises');
+        franchiseService().create({ franchises, newFranchise: item });
+    });
+};
 
 export function configureFakeBackend() {
     let realFetch = window.fetch;
-    window.fetch = function (url, opts) {
+    initDefaultFranchises();
+    window.fetch = (url, opts) => {
         return new Promise((resolve, reject) => {
             // wrap in timeout to simulate server api call
             setTimeout(() => {
@@ -15,9 +29,9 @@ export function configureFakeBackend() {
                         const response = userRouter().setRoutes({ url, opts });
                         return resolve(response);
                     };
-                    //franchaises routes
-                    if (url.match(/franchaises/)) {
-                        const response = franchaiseRouter().setRoutes({ url, opts });
+                    //franchises routes
+                    if (url.match(/franchises/)) {
+                        const response = franchiseRouter().setRoutes({ url, opts });
                         return resolve(response);
                     };
 

@@ -13,9 +13,23 @@ export function commonService() {
         return parseInt(urlParts[urlParts.length - 1]);
     };
 
+    const getNewId = (collection) => {
+        return collection.length ? Math.max(...collection.map(item => item.id)) + 1 : 1;
+    }
+
+    const isDuplicated = ({ collection, register, property }) => {
+        try {
+            return collection.filter(item => item[property] === register[property]).length;
+        } catch (err) {
+            throw err;
+        }
+    };
+
     return {
         getLocalStorage,
         verifyToken,
-        getIdUrl
+        getIdUrl,
+        getNewId,
+        isDuplicated
     }
 };

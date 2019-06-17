@@ -1,15 +1,13 @@
 <template>
     <div>
         <h1>Hi {{account.user.firstName}}!</h1>
-        <p>You're logged!</p>
-        <em v-if="users.loading">Loading users...</em>
-        <span v-if="users.error" class="text-danger">ERROR: {{users.error}}</span>
-        <ul v-if="users.items">
-            <li v-for="user in users.items" :key="user.id">
-                {{user.firstName + ' ' + user.lastName}}
-                <span v-if="user.deleting"><em> - Deleting...</em></span>
-                <span v-else-if="user.deleteError" class="text-danger"> - ERROR: {{user.deleteError}}</span>
-                <span v-else> - <a @click="deleteUser(user.id)" class="text-danger">Delete</a></span>
+        <img :src="avatarSrc(account.user.avatar)"/>
+        <p>List of franchises. Click one to go...</p>
+        <em v-if="franchises.loading">Loading franchises...</em>
+        <span v-if="franchises.error" class="text-danger">ERROR: {{franchises.error}}</span>
+        <ul v-if="franchises.items">
+            <li v-for="franchise in franchises.items" :key="franchise.id">
+                <a @mousedown="goToPage({ franchise })">{{ franchise.name }}</a>
             </li>
         </ul>
         <p>
@@ -25,17 +23,19 @@ export default {
     computed: {
         ...mapState({
             account: state => state.account,
-            users: state => state.users.all
-        })
+            franchises: state => state.franchises.all,
+        }),
     },
     created () {
-        this.getAllUsers();
+        this.getAllFranchises();
     },
     methods: {
-        ...mapActions('users', {
-            getAllUsers: 'getAll',
-            deleteUser: 'delete'
-        })
+        ...mapActions('franchises', {
+            getAllFranchises: 'getAll',
+            goToPage: 'goToFranchise',
+        }),
+        avatarSrc: (avatar) => avatar.dataUrl,
+
     }
 };
 </script>

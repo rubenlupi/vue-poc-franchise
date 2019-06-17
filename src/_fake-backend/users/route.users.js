@@ -19,7 +19,7 @@ export function userRouter() {
         // get user by id
         if (url.match(/\/users\/\d+$/) && opts.method === 'GET') {
             commonService().verifyToken(opts.headers);
-            const id = getIdUrl(url);
+            const id = commonService().getIdUrl(url);
             let users = commonService().getLocalStorage('users');
             return userService().getById({ users, id });
         };
@@ -33,7 +33,7 @@ export function userRouter() {
         // delete user
         if (url.match(/\/users\/\d+$/) && opts.method === 'DELETE') {
             commonService().verifyToken(opts.headers);
-            const id = getIdUrl(url);
+            const id = commonService().getIdUrl(url);
             return userService().deleteUser({ users, id });
         };
     };
