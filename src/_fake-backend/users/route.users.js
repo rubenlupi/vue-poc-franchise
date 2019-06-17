@@ -25,6 +25,7 @@ export function userRouter() {
         };
         // register user
         if (url.endsWith('/users/register') && opts.method === 'POST') {
+            console.log('registering user', opts.body);
             let users = commonService().getLocalStorage('users');
             let newUser = JSON.parse(opts.body);
             return userService().register({ users, newUser });

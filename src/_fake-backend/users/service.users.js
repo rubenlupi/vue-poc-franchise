@@ -15,7 +15,6 @@ export function userService() {
                 username: user.username,
                 firstName: user.firstName,
                 lastName: user.lastName,
-                avatar: user.avatar,
                 token: 'fake-jwt-token'
             };
             return { ok: true, text: () => Promise.resolve(JSON.stringify(responseJson)) };
