@@ -1,5 +1,4 @@
-var path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: 'development',
@@ -20,9 +19,14 @@ module.exports = {
             }
         ]
     },
-    plugins: [new HtmlWebpackPlugin({
-        template: './src/index.html'
-    })],
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            inject: true,
+            serviceWorkerLoader: `<script>${fs.readFileSync(path.join(__dirname,
+              './service-worker-dev.js'), 'utf-8')}</script>`
+        })
+    ],
     devServer: {
         historyApiFallback: true
     },
